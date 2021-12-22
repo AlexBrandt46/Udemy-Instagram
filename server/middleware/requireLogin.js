@@ -23,8 +23,7 @@ module.exports = (req, res, next)=>{
         User.findById(_id)
             .then(userData=>{
                 req.user = userData
+                next() // function used to execute the middle ware succeeding the current middleware
             })
-
-        next()
     })
 }
