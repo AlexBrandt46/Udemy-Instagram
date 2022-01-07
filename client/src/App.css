@@ -40,3 +40,10 @@ a {
     height: max-content;
     margin: 26px auto;
 }
+
+#post-create-card {
+    margin: 30px auto;
+    max-width: 500px;
+    padding: 20px;
+    text-align: center;
+}
