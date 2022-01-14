@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState} from "react"
 import {Link, useNavigate} from 'react-router-dom'
 import M from 'materialize-css'
 
@@ -36,6 +36,8 @@ const Login = ()=>{
                     M.toast({html: data.message, classes: "#43a047 green darken-1"})
                     navigate('/login')
                 }
+            }).catch(err=>{
+                console.log(err)
             })
         }
     }
@@ -55,7 +57,7 @@ const Login = ()=>{
                     value={email}
                     onChange={(e)=>setEmail(e.target.value)} />
                 <input 
-                    type="text" 
+                    type="password" 
                     placeholder="password"
                     value={password}
                     onChange={(e)=>setPassword(e.target.value)} />

@@ -45,7 +45,7 @@ router.post('/signup', (req, res)=>{
 
 })
 
-router.post('/signin', (req, res)=>{
+router.post('/login', (req, res)=>{
     const {email, password} = req.body
 
     if (!email || !password) {
@@ -63,9 +63,9 @@ router.post('/signin', (req, res)=>{
                 .then(match=>{
                     // If the passwords match
                     if (match) {
-                        // res.json({message:"successfully signed in"})
                         const token = jwt.sign({_id:savedUser._id}, JWT_SECRET)
-                        res.json({token})
+                        const {_id, name, email} = savedUser
+                        res.json({token, user:{_id, name, email}})
                     }
                     else {
                         return res.status(422).json({error:"Invalid password"})
