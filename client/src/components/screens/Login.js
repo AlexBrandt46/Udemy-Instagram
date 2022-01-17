@@ -1,10 +1,12 @@
-import React, {useState} from "react"
+import React, {useState, useContext} from "react"
 import {Link, useNavigate} from 'react-router-dom'
+import {UserContext} from '../../App'
 import M from 'materialize-css'
 
 const Login = ()=>{
 
     const navigate = useNavigate()
+    const {state, dispatch} = useContext(UserContext)
 
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
@@ -33,6 +35,7 @@ const Login = ()=>{
                 else {
                     localStorage.setItem('jwt', data.token)
                     localStorage.setItem("user", JSON.stringify(data.user)) // Can only store strings in local storage and data.user in an object
+                    dispatch({type:'USER', payload:data.user})
                     M.toast({html: "Signed In Successfully", classes: "#43a047 green darken-1"})
                     navigate('/')
                 }
@@ -56,7 +59,7 @@ const Login = ()=>{
                     placeholder="password"
                     value={password}
                     onChange={(e)=>setPassword(e.target.value)} />
-                <button class="btn waves-effect waves-light #64b5f6 blue darken-1" onClick={()=>PostData()}>Login</button>
+                <button class="btn waves-effect waves-light #64b5f6 blue darken-1" onClick={PostData}>Login</button>
                 <h5>
                     <Link to="/signup">Don't Have an Account?</Link>
                 </h5>
