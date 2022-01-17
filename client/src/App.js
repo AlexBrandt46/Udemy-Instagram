@@ -40,7 +40,7 @@ const Routing = ()=>{
 }
 
 function App() {
-  // Have to use square brackets so function is stored and can be referenced later
+  // Have to use square brackets so function is stored and can be referenced
   const [state, dispatch] = useReducer(reducer, initialState)
 
   return (
