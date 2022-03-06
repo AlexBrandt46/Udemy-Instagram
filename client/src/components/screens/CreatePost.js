@@ -33,7 +33,7 @@ const CreatePost = ()=> {
                 }
                 else {
                     M.toast({html: "Post Successfully Created", classes: "#43a047 green darken-1"})
-                    navigate('')
+                    navigate('/')
                 }
             }).catch(err=>{
                 console.log(err)
