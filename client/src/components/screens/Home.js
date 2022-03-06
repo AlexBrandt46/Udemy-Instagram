@@ -3,10 +3,12 @@ import React, {useState, useEffect} from "react";
 const Home = () => {
 
     const [data, setData] = useState([])
+
+    // Verifies that user is logged in only when page is first rendered
     useEffect(()=>{
         fetch('/allpost', {
             headers: {
-                "Authorization": "Bearer " + localStorage.getItem("jwt")
+                "Authorization": "Bearer " + localStorage.getItem("jwt") // Gets the token stored when user logs in in server/auth with /login
             }
         }).then(res=>res.json())
         .then(result=>{

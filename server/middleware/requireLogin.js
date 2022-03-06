@@ -6,6 +6,7 @@ const User = mongoose.model('User')
 module.exports = (req, res, next)=>{
     const {authorization} = req.headers
 
+    // If the authorization object doesn't exist then we know the user hasn't logged in yet because it's added to the HTTP header when an API call is made that requires the login info
     if (!authorization) {
         res.status(401).json({error:'you must be logged in'})
     }

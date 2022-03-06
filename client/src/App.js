@@ -11,12 +11,14 @@ import {reducer, initialState} from './reducers/userReducer'
 
 export const UserContext = createContext()
 
+// Runs on the initial rendering of the app
 const Routing = ()=>{
 
   const navigate = useNavigate()
   const {state, dispatch} = useContext(UserContext)
 
   useEffect(()=>{
+    // Gets the user that was stored in localStorage when /login API call was made
     const user = JSON.parse(localStorage.getItem("user"))
 
     if (user) {

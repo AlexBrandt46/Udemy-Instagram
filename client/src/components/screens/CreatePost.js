@@ -11,14 +11,14 @@ const CreatePost = ()=> {
     const [image, setImage] = useState("")
     const [url, setUrl] = useState("")
 
-    // Happens when we successfully update the url value with setUrl function
+    // Happens when we successfully update the url value with setUrl function in postDetails which is called whenever the post button is pressed
     useEffect(()=>{
         if (url) {
             fetch('/createpost', {
                 method:"post",
                 headers:{
                     "Content-Type": "application/json",
-                    "Authorization": "Bearer " + localStorage.getItem("jwt")
+                    "Authorization": "Bearer " + localStorage.getItem("jwt") // Gets the token stored when user logs in in server/auth with /login and stores the authorization info in the http header
                 },
                 body:JSON.stringify({
                     title,
