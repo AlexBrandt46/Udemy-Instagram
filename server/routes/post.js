@@ -7,6 +7,7 @@ const requireLogin = require('../middleware/requireLogin')
 router.get('/allpost', requireLogin, (req, res)=>{
     Post.find()
     .populate("postedBy", "_id name")
+    .populate("comments.postedBy", "_id name")
     .then(posts=>{
         res.json({posts})
     })
@@ -92,7 +93,9 @@ router.put('/comment', requireLogin, (req, res)=>{
     }, 
     {
         new: true
-    }).populate("comments.postedBy", "_id name")
+    })
+    .populate("comments.postedBy", "_id name")
+    .populate("postedBy", "_id name")
     .exec((err, result) => {
         if (err) {
             return res.status(422).json({error: error})
