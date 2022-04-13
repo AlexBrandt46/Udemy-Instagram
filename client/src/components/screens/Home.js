@@ -87,7 +87,6 @@ const Home = () => {
             })
         }).then(res => res.json())
         .then(result => {
-            console.log(result)
             const newData = data.map(item => {
                 // Case for if the record has been updated
                 if (item._id === result._id) {
@@ -104,13 +103,29 @@ const Home = () => {
         })
     }
 
+    const deletePost = (postId) => {
+        fetch(`/deletePost/${postId}`, {
+            method: "delete",
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("jwt")
+            }
+        }).then(res => res.json())
+        .then(result => {
+            console.log(result)
+            const newData = data.filter(item => {
+                return item._id !== result._id
+            })
+            setData(newData)
+        })
+    }
+
     return (
         <div className="home">
             {
                 data.map(item=>{
                     return(
                         <div className="card home-card" key={item._id}>
-                            <h5>{item.postedBy.name}</h5>
+                            <h5>{item.postedBy.name} {item.postedBy._id === state._id && <i className="material-icons" style={{ float: "right" }} onClick={() => deletePost(item._id)}>delete</i>}</h5>
                             <div className="card-image">
                                 <img src={item.photo} />
                             </div>
