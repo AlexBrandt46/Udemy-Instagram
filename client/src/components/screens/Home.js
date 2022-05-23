@@ -48,7 +48,6 @@ const Home = () => {
     }
 
     const unlikePost = (id) => {
-        debugger
         fetch('/unlike', {
             method: "put",
             headers: {
