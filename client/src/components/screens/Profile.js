@@ -15,7 +15,7 @@ const Profile = ()=>{
         .then(result => {
             setPosts(result.myPosts)
         })
-    })
+    }, [])
 
     return (
         <div style={{maxWidth: "500px", margin: "0px auto"}}>
