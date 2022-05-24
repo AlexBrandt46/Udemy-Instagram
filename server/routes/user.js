@@ -23,7 +23,7 @@ router.get('/user/:id',requireLogin,(req,res)=>{
     })
 })
 
-router.put('follow', requireLogin, (req, res) => {
+router.put('/follow', requireLogin, (req, res) => {
     User.findByIdAndUpdate(req.body.followId, {  // Searches for id of person being followed
         $push: {
             followers: req.user._id
@@ -40,6 +40,7 @@ router.put('follow', requireLogin, (req, res) => {
                 following: req.body.followId
             }
         }, { new: true })
+        .select("-password")
         .then(result => {
             res.json(result)
         }).catch(err => {
@@ -48,7 +49,7 @@ router.put('follow', requireLogin, (req, res) => {
     })
 })
 
-router.put('unfollow', requireLogin, (req, res) => {
+router.put('/unfollow', requireLogin, (req, res) => {
     User.findByIdAndUpdate(req.body.unfollowId, {  // Searches for id of person being removed from followers list
         $pull: {
             followers: req.user._id
@@ -65,6 +66,7 @@ router.put('unfollow', requireLogin, (req, res) => {
                 following: req.body.unfollowId
             }
         }, { new: true })
+        .select("-password")
         .then(result => {
             res.json(result)
         }).catch(err => {
