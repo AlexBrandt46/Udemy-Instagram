@@ -16,7 +16,7 @@ router.get('/allpost', requireLogin, (req, res)=>{
     })
 })
 
-router.get('/subscribedpost', requireLogin, (req, res)=>{
+router.get('/subscribedposts', requireLogin, (req, res)=>{
     // check if postedBy in following, then return the posts if true
     Post.find({postedBy: {$in: req.user.following}})
     .populate("postedBy", "_id name")
