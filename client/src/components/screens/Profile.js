@@ -5,6 +5,8 @@ const Profile = ()=>{
 
     const [posts, setPosts] = useState([])
     const {state, dispatch} = useContext(UserContext)
+    const [image, setImage] = useState("")
+    const [url, setUrl] = useState("")
 
     useEffect(() => {
         fetch('/myposts', {
@@ -16,6 +18,39 @@ const Profile = ()=>{
             setPosts(result.myPosts)
         })
     }, [])
+
+    useEffect(() => {
+        if (image) {
+            const data = new FormData()
+            data.append("file", image)
+            data.append("upload_preset", "insta-clone")
+            data.append("cloud_name", "dz3kbar9h")
+            fetch("https://api.cloudinary.com/v1_1/dz3kbar9h/image/upload",
+            {
+                method: "post",
+                body: data
+            })
+            .then(res=>res.json())
+            .then(data=>{
+                setUrl(data.url)
+                localStorage.setItem('user',JSON.stringify({
+                    ...state,
+                    pic: data.url
+                }))
+                dispatch({
+                    type: "UPDATEPIC",
+                    payload: data.url
+                })
+            })
+            .catch(err=>{
+                console.log(err)
+            })
+        }
+    }, [image])
+
+    const UpdatePhoto = (file) => {
+        setImage(file)
+    }
 
     return (
         <div style={{maxWidth: "600px", margin: "0px auto"}}>
@@ -30,7 +65,17 @@ const Profile = ()=>{
                         style={{width: "160px", height:"160px", borderRadius:"80px"}}
                         src={state ? state.pic : "Loading"}
                     />
-                    <button style={{marginBottom: "1vh"}} className="btn waves-effect waves-light #64b5f6 blue darken-1">Update Profile Pic</button>
+                    <div className="file-field input-field">
+                        <div style={{marginBottom: "1vh", width: "160px"}} className="btn waves-effect waves-light #64b5f6 blue darken-1">
+                            <span>Update Profile Pic</span>
+                            <input 
+                                type="file"
+                                onChange={(e)=>UpdatePhoto(e.target.files[0])} />
+                        </div>
+                        <div className="file-path-wrapper">
+                            <input className="file-path validate" type="text" />
+                        </div>
+                    </div>
                 </div>
                 <div style={{    
                     justifyContent: "space-around",

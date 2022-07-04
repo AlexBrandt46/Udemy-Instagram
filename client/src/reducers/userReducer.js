@@ -6,6 +6,11 @@ export const reducer = (state, action)=>{
             return action.payload
         case 'CLEAR':
             return null
+        case 'UPDATEPIC':
+            return {
+                ...state,
+                pic: action.payload
+            }
         case 'UPDATE':
             return {
                 ...state,
