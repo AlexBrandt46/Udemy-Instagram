@@ -21,7 +21,11 @@ const userSchema = new mongoose.Schema({
     following:[{
         type: ObjectId,
         ref: "User"
-    }]
+    }],
+    pic:{
+        type: String,
+        default: "https://res.cloudinary.com/dz3kbar9h/image/upload/v1656971683/dark-souls-solaire_jchey3.jpg"
+    }
 })
 
 mongoose.model('User', userSchema)

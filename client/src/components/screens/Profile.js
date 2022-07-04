@@ -18,20 +18,24 @@ const Profile = ()=>{
     }, [])
 
     return (
-        <div style={{maxWidth: "500px", margin: "0px auto"}}>
+        <div style={{maxWidth: "600px", margin: "0px auto"}}>
             <div id="" style={{
                 display:"flex",
                 justifyContent:"space-around",
                 margin:"18px 0px",
                 borderBottom:"1px solid grey"
             }}>
-                <div>
+                <div style={{width: "160px", borderRadius:"80px"}}>
                     <img 
                         style={{width: "160px", height:"160px", borderRadius:"80px"}}
-                        src="https://images.unsplash.com/photo-1475692277358-d66444784d6b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8cGVyc29ufGVufDB8MnwwfHw%3D&auto=format&fit=crop&w=500&q=60"
+                        src={state ? state.pic : "Loading"}
                     />
+                    <button style={{marginBottom: "1vh"}} className="btn waves-effect waves-light #64b5f6 blue darken-1">Update Profile Pic</button>
                 </div>
-                <div>
+                <div style={{    
+                    justifyContent: "space-around",
+                    display: "flex",
+                    flexDirection: "column"}}>
                     <h4>{state ? state.name : 'loading' }</h4>
                     <h4>{state ? state.email : 'loading' }</h4>
                     <div style={{display:"flex", justifyContent: "space-between", width:"108%"}}>
