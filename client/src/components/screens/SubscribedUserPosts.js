@@ -150,7 +150,7 @@ const Home = () => {
                                             <div className="commentBlock">
                                                 <img src={ record.postedBy.pic } className="postedByImage"/>
                                                 <h6 key={ record._id }>
-                                                    <span className="commentPoster" style={{ fontWeight: "bold" }}>{record.postedBy.name}</span> 
+                                                    <span className="commentPoster" style={{ fontWeight: "bold" }}><Link to={record.postedBy._id !== state._id ? "/profile/" + record.postedBy._id : "/profile"  }>{record.postedBy.name}</Link></span> 
                                                     <span className="commentContents">{record.text}</span>
                                                 </h6>
                                             </div>
