@@ -57,3 +57,50 @@ a {
 .material-icons:hover {
     cursor: pointer;
 }
+
+.postHeader {
+    display: flex;
+    padding: 5px;
+    align-items: center;
+}
+
+.postedByHeader {
+    margin: 0;
+    margin-left: 0.5vw;
+}
+
+.postedByHeader a {
+    white-space: nowrap;
+}
+
+.postedByImage {
+    width: 2vw;
+    height: 2vw;
+    border-radius: 50%;
+}
+
+.deleteBtnContainer {
+    display: flex;
+    width: 100%;
+    justify-content: end;
+}
+
+.commentBlock {
+    display: flex;
+    margin-top: 0.5vh;
+}
+
+.commentBlock h6 {
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.commentPoster {
+    font-weight: bold;
+    margin-left: 0.25vw;
+}
+
+.commentContents {
+    margin-left: 0.25vw;
+}

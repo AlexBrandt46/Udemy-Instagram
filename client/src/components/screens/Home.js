@@ -125,7 +125,13 @@ const Home = () => {
                 data.map(item=>{
                     return(
                         <div className="card home-card" key={item._id}>
-                            <h5 style={{padding:"5px"}}><Link to={item.postedBy._id !== state._id ? "/profile/" + item.postedBy._id : "/profile"  }>{item.postedBy.name}</Link> {item.postedBy._id == state._id && <i className="material-icons" style={{ float:"right" }} onClick={()=>deletePost(item._id)}>delete</i>}</h5> 
+                            <div style={{display: "flex"}} className="postHeader">
+                                <img src={item.postedBy.pic} className="postedByImage"/>
+                                <h5 className="postedByHeader"><Link to={item.postedBy._id !== state._id ? "/profile/" + item.postedBy._id : "/profile"  }>{item.postedBy.name}</Link></h5>
+                                <div className="deleteBtnContainer">
+                                    {item.postedBy._id == state._id && <i className="material-icons" style={{ float:"right" }} onClick={()=>deletePost(item._id)}>delete</i>}
+                                </div>
+                            </div>
                             <div className="card-image">
                                 <img src={item.photo} />
                             </div>
@@ -141,7 +147,13 @@ const Home = () => {
                                 {
                                     item.comments.map(record => {
                                         return (
-                                            <h6 key={ record._id }><span style={{ fontWeight: "bold" }}>{record.postedBy.name}</span> {record.text}</h6>
+                                            <div className="commentBlock">
+                                                <img src={record.postedBy.pic} className="postedByImage"/>
+                                                <h6 key={ record._id }>
+                                                    <span className="commentPoster" style={{ fontWeight: "bold" }}>{record.postedBy.name}</span> 
+                                                    <span className="commentContents">{record.text}</span>
+                                                </h6>
+                                            </div>
                                         )
                                     })
                                 }

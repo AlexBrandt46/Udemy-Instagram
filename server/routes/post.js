@@ -6,8 +6,8 @@ const requireLogin = require('../middleware/requireLogin')
 
 router.get('/allpost', requireLogin, (req, res)=>{
     Post.find()
-    .populate("postedBy", "_id name")
-    .populate("comments.postedBy", "_id name")
+    .populate("postedBy", "_id name pic")
+    .populate("comments.postedBy", "_id name pic")
     .sort('-createdAt')
     .then(posts=>{
         res.json({posts})
@@ -20,8 +20,8 @@ router.get('/allpost', requireLogin, (req, res)=>{
 router.get('/subscribedposts', requireLogin, (req, res)=>{
     // check if postedBy in following, then return the posts if true
     Post.find({postedBy: {$in: req.user.following}})
-    .populate("postedBy", "_id name")
-    .populate("comments.postedBy", "_id name")
+    .populate("postedBy", "_id name pic")
+    .populate("comments.postedBy", "_id name pic")
     .sort('-createdAt')
     .then(posts=>{
         res.json({posts})
@@ -73,8 +73,8 @@ router.put('/like',requireLogin,(req,res)=>{
     },{
         new:true
     })
-    .populate("comments.postedBy", "_id name")
-    .populate("postedBy", "_id name")
+    .populate("comments.postedBy", "_id name pic")
+    .populate("postedBy", "_id name pic")
     .exec((err,result)=>{
         if(err){
             return res.status(422).json({error:err})
@@ -90,8 +90,8 @@ router.put('/unlike',requireLogin,(req,res)=>{
     },{
         new:true
     })
-    .populate("comments.postedBy", "_id name")
-    .populate("postedBy", "_id name")
+    .populate("comments.postedBy", "_id name pic")
+    .populate("postedBy", "_id name pic")
     .exec((err,result)=>{
         if(err){
             return res.status(422).json({error:err})
@@ -113,8 +113,8 @@ router.put('/comment', requireLogin, (req, res)=>{
     {
         new: true
     })
-    .populate("comments.postedBy", "_id name")
-    .populate("postedBy", "_id name")
+    .populate("comments.postedBy", "_id name pic")
+    .populate("postedBy", "_id name pic")
     .exec((err, result) => {
         if (err) {
             return res.status(422).json({error: error})

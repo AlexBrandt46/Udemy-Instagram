@@ -42,7 +42,6 @@ const Profile = ()=>{
                     })
                 }).then(res => res.json())
                 .then(result => {
-                    console.log(result)
                     localStorage.setItem('user',JSON.stringify({
                         ...state,
                         pic: data.pic
