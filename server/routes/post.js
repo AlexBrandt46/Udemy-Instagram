@@ -143,4 +143,32 @@ router.delete('/deletePost/:postId', requireLogin, (req, res) => {
     })
 })
 
+router.get('/post/:postId', requireLogin, (req, res) => {
+    Post.findById(req.params.postId)
+        .then(post=>{
+            res.json({post})
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+})
+
+router.put('/post/edit/:postId', requireLogin, (req, res) => {
+    //console.log(req)
+    Post.findByIdAndUpdate(req.params.postId, {
+        $set: {
+            title: req.body.title,
+            body: req.body.body
+        }
+    }, 
+    { new: true },
+    (err, result) => {
+        if (err) {
+            return res.status(422).json({error: "Post cannot be updated"})
+        }
+
+        res.json(result)
+    })
+})
+
 module.exports = router
