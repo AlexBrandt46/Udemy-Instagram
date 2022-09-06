@@ -4,8 +4,18 @@ const mongoose = require('mongoose')
 const User = mongoose.model("User")
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const {JWT_SECRET} = require('../config/keys')
+const {JWT_SECRET, SENDGRID_KEY} = require('../config/keys')
 const requiredLogin = require('../middleware/requireLogin')
+const nodemailer = require('nodemailer')
+const sendgridTransport = require('nodemailer-sendgrid-transport')
+
+// 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
+
+const transporter = nodemailer.createTransport(sendgridTransport({
+    auth: {
+        api_key: SENDGRID_KEY
+    }
+}))
 
 router.post('/signup', (req, res)=>{
     const {name, email, password, pic} = req.body
@@ -20,8 +30,6 @@ router.post('/signup', (req, res)=>{
                 return res.status(422).json({error:"user already exists with that email"})
             }
             
-            console.log('just before hash')
-
             bcrypt.hash(password, 12)
                 .then(hashedpassword=>{
                     const user = new User({
@@ -32,7 +40,13 @@ router.post('/signup', (req, res)=>{
                     })
         
                     user.save()
-                        .then(user=>{
+                        .then(user => {
+                            transporter.sendMail({
+                                to: user.email,
+                                from: "testprofile3155@gmail.com",
+                                subject: "Signup Success",
+                                html: "<h1>Welcome to the Udemy Instagram clone!</h1>"
+                            })
                             res.json({message:"saved successfully"})
                         })
                         .catch(err=>{
