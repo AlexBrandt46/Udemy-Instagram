@@ -104,3 +104,7 @@ a {
 .commentContents {
     margin-left: 0.25vw;
 }
+
+.collection-item {
+    float: none;
+}
