@@ -10,6 +10,9 @@ const Profile = ()=>{
     const [showFollow, setShowFollow] = useState(state ? !state.following.includes(userId) : true)
 
     useEffect(() => {
+
+        console.log('test')
+
         fetch(`/user/${userId}`, {
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("jwt")
@@ -18,7 +21,7 @@ const Profile = ()=>{
         .then(result => {
             setProfile(result)
         })
-    }, [])
+    })
 
     const followUser = () => {
         fetch('/follow', {
