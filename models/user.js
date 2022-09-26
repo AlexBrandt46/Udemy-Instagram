@@ -25,7 +25,9 @@ const userSchema = new mongoose.Schema({
     pic:{
         type: String,
         default: "https://res.cloudinary.com/dz3kbar9h/image/upload/v1656971683/dark-souls-solaire_jchey3.jpg"
-    }
+    },
+    resetToken: String,
+    expireToken: Date
 })
 
 mongoose.model('User', userSchema)

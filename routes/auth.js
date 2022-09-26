@@ -8,6 +8,7 @@ const {JWT_SECRET, SENDGRID_KEY} = require('../config/keys')
 const requiredLogin = require('../middleware/requireLogin')
 const nodemailer = require('nodemailer')
 const sendgridTransport = require('nodemailer-sendgrid-transport')
+const crypto = require('crypto')
 
 const transporter = nodemailer.createTransport(sendgridTransport({
     auth: {
@@ -92,6 +93,38 @@ router.post('/login', (req, res)=>{
 
 router.get('/protected', requiredLogin, (req, res)=>{
     res.send("hello user")
+})
+
+router.post('/reset-password', (req, res) => {
+    crypto.randomBytes(32, (err, buffer) => {
+        if (err) {
+            console.log(err)
+        }
+
+        const token = buffer.toString('hex')
+        User.findOne({ email: req.body.email })
+        .then(function (user) {
+                if (!user) {
+                    return res.status(422).json({ error: "That email didn't match any of our records." })
+                }
+
+                user.resetToken = token
+                user.expireToken = Date.now() + 3600000
+                user.save().then((result) => {
+                    transporter.sendMail({
+                        to: user.email,
+                        from: "no-replay@insta.com",
+                        subject: "Password Reset",
+                        html: `
+                        <p>You have requested to reset your password.</p>
+                        <h5><a href="http://localhost:3000/reset/${token}">Click to Reset</a></h5>
+                        `
+                    })
+
+                    res.json({message: "Password reset email has been sent."})
+                })
+            })
+    })
 })
 
 module.exports = router

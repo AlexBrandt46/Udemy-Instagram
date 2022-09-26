@@ -1,7 +1,7 @@
 import React, {useEffect, createContext, useReducer, useContext} from 'react'
 import NavBar from './components/Navbar'
 import './App.css'
-import {BrowserRouter, Route, Routes, useNavigate} from 'react-router-dom'
+import {BrowserRouter, Route, Routes, useNavigate, useLocation} from 'react-router-dom'
 import Home from './components/screens/Home'
 import Login from './components/screens/Login'
 import Signup from './components/screens/Signup'
@@ -11,6 +11,7 @@ import UserProfile from './components/screens/UserProfile'
 import SubscribedUserPosts from './components/screens/SubscribedUserPosts'
 import EditPost from './components/screens/EditPost'
 import {reducer, initialState} from './reducers/userReducer'
+import Reset from './components/screens/Reset'
 
 export const UserContext = createContext()
 
@@ -18,6 +19,7 @@ export const UserContext = createContext()
 const Routing = ()=>{
 
   const navigate = useNavigate()
+  const location = useLocation()
   const {state, dispatch} = useContext(UserContext)
 
   useEffect(()=>{
@@ -28,7 +30,9 @@ const Routing = ()=>{
       dispatch({type:"USER", payload:user})
     }
     else {
-      navigate('/login')
+      if (!location.pathname.startsWith('/reset')) {
+        navigate('/login')
+      }
     }
   },[])
 
@@ -42,6 +46,7 @@ const Routing = ()=>{
       <Route path="/profile/:userId" element={<UserProfile />} />
       <Route path="/myfollowerspost" element={<SubscribedUserPosts />} />
       <Route path="/editPost/:postId" element={<EditPost />} />
+      <Route path="/reset" element={<Reset />} />
     </Routes>
   )
 }
