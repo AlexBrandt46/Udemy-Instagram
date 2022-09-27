@@ -61,7 +61,7 @@ const Login = ()=>{
                     onChange={(e)=>setPassword(e.target.value)} />
                 <button className="btn waves-effect waves-light #64b5f6 blue darken-1" onClick={PostData}>Login</button>
                 <h5>
-                    <Link to="/signup">Don't Have an Account?</Link>
+                    <Link to="/signup">Forgot Password?</Link>
                 </h5>
             </div>
         </div>

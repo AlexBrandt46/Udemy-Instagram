@@ -111,6 +111,9 @@ const Login = ()=>{
                 <h5>
                     <Link to="/login">Already Have an Account?</Link>
                 </h5>
+                <h6>
+                    <Link to="/reset">Reset Password</Link>
+                </h6>
             </div>
         </div>
     )
